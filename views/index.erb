@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<title>Simple Sinatra guestbook</title>
+	</head>
+	<body>
+		<div>
+			Welcome to Sinatra Guestbook!
+		</div>
+		<div>
+			<%= render_posts %>
+		</div>
+		<br />
+		<form action="/" method="post">
+			Author:<br />
+			<input type="text" name="author" /><br />
+			Message:<br />
+			<textarea cols="40" rows="5" name="message"></textarea><br />
+			<input type="submit" text="Send" />
+		</form>
+	</body>
+</html>

@@ -1,0 +1,7 @@
+date: 2013-06-22 03:29:03 +0300
+name: Jorn
+message: Hi, Sinatra!
+=====date: 2013-06-22 03:29:56 +0300
+name: Ivan
+message: I am Ivan! I was here!
+=====
