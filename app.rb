@@ -9,8 +9,8 @@ get '/' do
 end
 
 post '/' do
-	author = params[:author]
-	message = params[:message]
+	author = params[:author].chomp.strip
+	message = params[:message].chomp.strip
 
 	if author != nil && author.empty? != true && 
 		message != nil && message.empty? != true
