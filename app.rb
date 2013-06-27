@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-#Sinatra Guestbook night-Beta
+#Sinatra Guestbook
 
 require 'sinatra'
 
@@ -8,9 +8,13 @@ get '/' do
 	erb:index
 end
 
+get '/clear' do
+	clear_file
+end
+
 post '/' do
-	author = params[:author].chomp.strip
-	message = params[:message].chomp.strip
+	author = params[:author].strip.chomp
+	message = params[:message].strip.chomp
 
 	if author != nil && author.empty? != true && 
 		message != nil && message.empty? != true
@@ -27,32 +31,44 @@ def render_posts
 
 	if posts.length > 0
 		posts.each do |post|
-			html_posts << "<br />#{post[:date]}<br />#{post[:name]}<br />#{post[:message]}<br />"		
+			html_posts << "<div><small><strong>#{post[:name]}</strong> on #{post[:date]} wrote</small><blockquote>#{render_message(post[:message])}</blockquote></div>"
 		end
 	else
-		html_posts = "<br />Guestbook is empty... =("
+		html_posts = "<div>Guestbook is empty... =(</div>"
 	end
 
 	html_posts
 end
 
+def render_message(message)
+	paragraphs = ""
+
+	message.each_line('\n') do |line|
+		if line.empty? != true
+			paragraphs << "#{line.chomp('\n')}<br />"
+		end
+	end
+
+	paragraphs.chomp('<br />')
+end
+
 def get_posts
 	file_content = File.open('posts.txt'){ |file| file.read }
-	unparsed_posts = file_content.split("=====")
+	unparsed_posts = file_content.split("=====\n")
 
 	pattern = /^date:\s(.+)\nname:\s(.+)\nmessage:\s(.+)$/
 
 	posts ||= []
 
 	unparsed_posts.each do |post|
-		pattern =~ post
+		pattern =~ post.gsub(/\r\n/, '\n')
 
 		parse_data = Regexp.last_match
 
 		parsed_post = Hash.new
-		parsed_post[:date] = parse_data[1].chomp
-		parsed_post[:name] = parse_data[2].chomp
-		parsed_post[:message] = parse_data[3].chomp
+		parsed_post[:date] = parse_data[1].strip.chomp
+		parsed_post[:name] = parse_data[2].strip.chomp
+		parsed_post[:message] = parse_data[3].strip.chomp
 
 		posts << parsed_post
 	end
@@ -65,6 +81,12 @@ def save_post (author, message)
 		file.puts "date: #{Time.new}"
 		file.puts "name: #{author}"
 		file.puts "message: #{message}"
-		file.print "====="
+		file.puts "====="
+	end
+end
+
+def clear_file
+	File.open('posts.txt', 'w') do |file| 
+		file.print ''
 	end
 end
