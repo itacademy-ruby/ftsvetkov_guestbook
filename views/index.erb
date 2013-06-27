@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	<head>
-		<title>Simple Sinatra guestbook</title>
-		<!-- Bootstrap -->
-    	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
-	</head>
-	<body>
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-	    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <head>
+    <title>Simple Sinatra guestbook</title>
+    <!-- Bootstrap -->
+    <%= css :bootstrap %>
+    <style>
+      body {
+        padding-top: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <%= js :bootstrap %>
 
-		<div class="container">
-			<h2>
-				Welcome to Sinatra Guestbook!
-			</h2>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Sinatra Guestbook!</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="/clear">Clear</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
 
-			<%= render_posts %>
+    <div class="container">
 
-			<form action="/" method="post">
-				<fieldset>
-					<legend>Leave your message</legend>
-					<label>Author:</label>
-					<input type="text" placeholder="Enter your name…" name="author" />
-					<label>Message:</label>
-					<textarea maxlength="4000" rows="5" name="message"></textarea><br />
-					<input type="submit" class="btn btn-primary" text="Send" />
-				<fieldset>
-			</form>
-		</div>
-	</body>
+      <%= render_posts %>
+
+      <form action="/" method="post">
+        <fieldset>
+          <legend>Leave your message</legend>
+          <label>Author:</label>
+          <input type="text" placeholder="Enter your name…" name="author" />
+          <label>Message:</label>
+          <textarea maxlength="4000" rows="5" name="message"></textarea><br />
+          <input type="submit" class="btn btn-primary" text="Send" />
+        <fieldset>
+      </form>
+    </div>
+  </body>
 </html>
