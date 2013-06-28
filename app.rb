@@ -22,6 +22,8 @@ configure do
       '/css/bootstrap-responsive.css'
     ]
 
+    prebuild true
+
     js_compression  :jsmin
     css_compression :simple
   end
