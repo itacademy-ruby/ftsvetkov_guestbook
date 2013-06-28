@@ -7,6 +7,8 @@ require 'sinatra/assetpack'
 
 set :root, File.dirname(__FILE__)
 
+register Sinatra::AssetPack
+
 configure do
   assets do
     serve '/js',     from: 'public/bootstrap/js'
